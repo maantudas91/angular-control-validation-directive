@@ -24,15 +24,19 @@
       </div>
     </div>
   </div>
+  <div formArrayName="phoneNumbers">
+    <h3>Phone numbers</h3>
+    <div *ngFor="let phoneControl of phoneNumberControl.controls; let i=index;">
+      <div class="field">
+      <div class="control">
+        <input class="input" name="phoneNumber[{{phoneId}}]" [formControlName]="i" placeholder="Phone number {{i+1}}">
+         <button type="button" class="button" (click)="remove(i)">remove</button>
+      </div>
+    </div>
+    </div>
+    <button type="button"  class="button" (click)="add()">Add phone number</button>
+  </div>
   <div class="control">
     <button class="button is-link is-small">Submit</button>
   </div>
 </form>
-
-
-<!-- <h1>Standalone</h1>
-<div class="field">
-  <div class="control">
-    <input class="input" [formControl]="control" placeholder="Name">
-  </div>
-</div> -->

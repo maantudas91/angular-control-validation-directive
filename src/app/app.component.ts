@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'my-app',
@@ -12,6 +12,10 @@ export class AppComponent {
   customErrors = {required: 'Please accept the terms'}
   constructor(private builder: FormBuilder) { }
 
+  get phoneNumberControl(): FormArray{
+    return this.form.get('phoneNumbers') as FormArray;
+  }
+
   ngOnInit() {
     this.control = this.builder.control('', Validators.required);
 
@@ -21,7 +25,21 @@ export class AppComponent {
       address: this.builder.group({
         city: ['', Validators.required],
         country: ['', Validators.required]
-      })
+      }),
+      phoneNumbers: new FormArray([this.createFormControl()])
     });
   }
+
+  createFormControl(): FormControl{
+    return new FormControl('', [Validators.required])
+  }
+
+  remove(i: number) {
+    this.phoneNumberControl.removeAt(i);
+  }
+
+  add() {
+    this.phoneNumberControl.push(this.createFormControl());
+  }
+
 }
